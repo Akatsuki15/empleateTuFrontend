@@ -3,6 +3,7 @@ import Offer from "../models/Offer"
 import { OfferService } from "../services/offer.service"
 import { useNavigate, useParams } from "react-router-dom"
 import { Temporal } from "temporal-polyfill"
+import toast from "react-hot-toast"
 
 // formulario de creacion de uan oferta
 // Actualizar una oferta
@@ -55,9 +56,10 @@ function OfferForm() {
       }
       if(id) OfferService.update(Number(id), formData)
       else OfferService.create(formData)
-
+      toast.success('Oferta guardada correctamente')
       navigate('/offers')
     } catch (error) {
+      toast.error('Error al guardar oferta')
       setError(error instanceof Error ? error.message : 'Error desconocido')
     }finally{
       setLoading(false)
