@@ -10,6 +10,7 @@ import OfferList from './page/OfferList'
 import OfferForm from './page/OfferForm'
 import OfferDetail from './page/OfferDetail'
 import { Toaster } from 'react-hot-toast'
+import CategoryManager from './page/CategoryManager'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/offers/:id" element={<OfferDetail/>}/>
           <Route path="/offers/new" element={<OfferForm/>}/>
           <Route path="/offers/edit/:id" element={<OfferForm/>}/>
+          <Route path='/categories' element={<CategoryManager />}/>
         </Routes>
         </div>
         </div>

@@ -9,3 +9,8 @@ Valida mediante un middleware el formulario de registro
 
 Ejercicio3:
 Crea un fronted con Vite + tailwind 4.0 + react
+
+
+Cosas:
+
+- npm i jwt-decode

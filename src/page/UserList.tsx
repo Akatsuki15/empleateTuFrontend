@@ -1,41 +1,33 @@
 import { useEffect, useState } from "react"
-import { getUsers } from "../services/userService"
-
-interface User{
-  name: string
-  surname: string
-  email: string
-  role: string
-  course: string
-  active: boolean
-  acceptNotifications: boolean
-}
+import { UserService } from "../services/userService"
+import User from "../models/User"
 
 function UserList() {
-
   const [users, setUsers] = useState<User[]>([])
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    // llamamos al backend api
-    async function call() {
-      try {
-        const userList = await getUsers()
-        setUsers(userList)
-      } catch (error) {
+  useEffect(()=>{
+    async function call(){
+      try{
+        const userList = await UserService.getAll()
+        setUsers(userList)      
+      }catch(error){
         const msg = error instanceof Error ? error.message : 'Error desconocido'
         setMessage(msg)
-      } finally {
+      }finally{
         setLoading(false)
       }
     }
     call()
-  }, [])
+  },[])
 
-  if (loading) return <div>Loading...</div>
+  if(loading)    return <div>Loading...</div>
+  
 
   return (
+
+
     <div className="relative overflow-x-auto">
       {message}
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -59,8 +51,8 @@ function UserList() {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => 
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+        { users.map( user => 
+          <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {user.name}
             </th>
@@ -76,11 +68,13 @@ function UserList() {
             <td className="px-6 py-4">
               {user.course}
             </td>
-          </tr>)}
+          </tr>
+        )}
 
         </tbody>
       </table>
     </div>
+
   )
 }
 
